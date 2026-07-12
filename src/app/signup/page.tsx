@@ -1,26 +1,20 @@
-"use client";
-
 import Link from "next/link";
-import { FormEvent, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
+import SignupForm from "@/components/signup/SignupForm";
+
+function SignupFormFallback() {
+  return (
+    <div className="mt-6 space-y-4">
+      <div className="h-14 animate-pulse rounded-sm bg-[#e5e5e5]" />
+      <div className="h-14 animate-pulse rounded-sm bg-[#e5e5e5]" />
+      <div className="h-16 animate-pulse rounded bg-[#e50914]/70" />
+    </div>
+  );
+}
 
 export default function SignupPage() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
-  const emailFromLandingPage = searchParams.get("email") ?? "";
-
-  const [email, setEmail] = useState(emailFromLandingPage);
-  const [password, setPassword] = useState("");
-
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    router.push("/signup/plan");
-  }
-
   return (
-    <main className="min-h-screen bg-white text-[#333333]">
+    <main className="flex min-h-screen flex-col bg-white text-[#333333]">
       <header className="border-b border-[#e6e6e6]">
         <nav className="mx-auto flex min-h-[90px] w-full max-w-[1400px] items-center justify-between px-5 sm:px-10">
           <Link
@@ -39,7 +33,7 @@ export default function SignupPage() {
         </nav>
       </header>
 
-      <section className="px-6 py-12 sm:py-16">
+      <section className="flex-1 px-6 py-12 sm:py-16">
         <div className="mx-auto w-full max-w-[440px]">
           <p className="text-sm uppercase">
             Step <span className="font-semibold">1</span> of{" "}
@@ -56,54 +50,13 @@ export default function SignupPage() {
 
           <p className="text-lg">We hate paperwork, too.</p>
 
-          <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-            <div>
-              <label
-                htmlFor="signup-email"
-                className="mb-2 block text-sm font-medium"
-              >
-                Email
-              </label>
-
-              <input
-                id="signup-email"
-                type="email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                placeholder="Email address"
-                className="h-14 w-full rounded-sm border border-[#8c8c8c] bg-white px-4 text-base text-black outline-none transition focus:border-[#0071eb] focus:ring-1 focus:ring-[#0071eb]"
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="signup-password"
-                className="mb-2 block text-sm font-medium"
-              >
-                Add a password
-              </label>
-
-              <input
-                id="signup-password"
-                type="password"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-                placeholder="Password"
-                className="h-14 w-full rounded-sm border border-[#8c8c8c] bg-white px-4 text-base text-black outline-none transition focus:border-[#0071eb] focus:ring-1 focus:ring-[#0071eb]"
-              />
-            </div>
-
-            <button
-              type="submit"
-              className="h-16 w-full rounded bg-[#e50914] text-xl font-semibold text-white transition-colors duration-200 hover:bg-[#f6121d]"
-            >
-              Next
-            </button>
-          </form>
+          <Suspense fallback={<SignupFormFallback />}>
+            <SignupForm />
+          </Suspense>
         </div>
       </section>
 
-      <footer className="mt-auto border-t border-[#e6e6e6] bg-[#f3f3f3] px-6 py-10 text-[#737373]">
+      <footer className="border-t border-[#e6e6e6] bg-[#f3f3f3] px-6 py-10 text-[#737373]">
         <div className="mx-auto w-full max-w-[1000px]">
           <p>Questions? Contact us.</p>
 
