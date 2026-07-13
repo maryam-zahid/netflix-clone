@@ -147,7 +147,7 @@
 //   );
 // }
 "use client";
-
+import Link from "next/link";
 import Image from "next/image";
 import {
   Check,
@@ -161,10 +161,13 @@ import type { Movie } from "@/data/movies";
 
 type MovieCardProps = {
   movie: Movie;
+  fullWidth?: boolean;
 };
 
-export default function MovieCard({ movie }: MovieCardProps) {
-  const videoRef = useRef<HTMLVideoElement>(null);
+export default function MovieCard({
+  movie,
+  fullWidth = false,
+}: MovieCardProps) {  const videoRef = useRef<HTMLVideoElement>(null);
   const hoverTimerRef = useRef<number | null>(null);
 
   const [isHovered, setIsHovered] = useState(false);
@@ -194,11 +197,20 @@ export default function MovieCard({ movie }: MovieCardProps) {
   }
 
   return (
+    // <article
+    //   onMouseEnter={handleMouseEnter}
+    //   onMouseLeave={handleMouseLeave}
+    //   className="group relative min-w-[210px] flex-none sm:min-w-[240px] lg:min-w-[280px]"
+    // >
     <article
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      className="group relative min-w-[210px] flex-none sm:min-w-[240px] lg:min-w-[280px]"
-    >
+  onMouseEnter={handleMouseEnter}
+  onMouseLeave={handleMouseLeave}
+  className={`group relative flex-none ${
+    fullWidth
+      ? "w-full min-w-0"
+      : "min-w-[165px] sm:min-w-[220px] md:min-w-[240px] lg:min-w-[280px]"
+  }`}
+>
       <div
         className={`relative z-10 origin-center transition-all duration-300 ${
           isHovered ? "z-50 scale-[1.04]" : ""
@@ -246,13 +258,21 @@ export default function MovieCard({ movie }: MovieCardProps) {
 
             <div className="mt-2 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <button
+                {/* <button
                   type="button"
                   aria-label={`Play ${movie.title}`}
                   className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-black transition hover:scale-105"
                 >
                   <Play className="h-4 w-4 fill-black" />
-                </button>
+                </button> */}
+               
+                <Link
+  href={`/player/${movie.id}`}
+  aria-label={`Play ${movie.title}`}
+  className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-black transition hover:scale-105"
+>
+  <Play className="h-4 w-4 fill-black" />
+</Link>
 
                 <button
                   type="button"
@@ -273,13 +293,20 @@ export default function MovieCard({ movie }: MovieCardProps) {
                   )}
                 </button>
 
-                <button
+                {/* <button
                   type="button"
                   aria-label={`Like ${movie.title}`}
                   className="flex h-8 w-8 items-center justify-center rounded-full border border-[#808080] text-white hover:border-white"
                 >
                   <ThumbsUp className="h-4 w-4" />
-                </button>
+                </button> */}
+                <Link
+  href={`/movie/${movie.id}`}
+  aria-label={`More information about ${movie.title}`}
+  className="flex h-8 w-8 items-center justify-center rounded-full border border-[#808080] text-white transition-colors hover:border-white"
+>
+  <ChevronDown className="h-4 w-4" />
+</Link>
               </div>
 
               <button
