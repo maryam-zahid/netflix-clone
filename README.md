@@ -5,7 +5,15 @@ A responsive Netflix-inspired frontend built with **Next.js App Router**, **Reac
 This project is a frontend-only implementation based on the provided Netflix Figma design. It recreates the user experience of Netflix using reusable components, responsive layouts, local assets, and client-side navigation.
 
 ---
+# 🚀 Live Demo
 
+**GitHub Repository**
+
+https://github.com/maryam-zahid/netflix-clone
+**Vercel Deployment**
+
+https://netflix-clone-8obv7apu1-maryam-zahids-projects.vercel.app
+---
 # 📸 Project Screenshots
 
 ## Landing Page
